@@ -1,4 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
+    // asigns user schema to var
     const User = sequelize.define('User', {
         username: {
             type: DataTypes.STRING,
@@ -13,5 +14,6 @@ module.exports = (sequelize, DataTypes) => {
         }
     });
 
+    // return user schema
     return User;
 }

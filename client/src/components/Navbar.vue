@@ -7,6 +7,7 @@
             <router-link tag='a' to='/' class="brand-logo">Playlist-Manager</router-link>
             <ul id="nav-mobile" class="right">
               <router-link tag='li' to='/sign-up'><a>Sign Up</a></router-link>
+              <li><a href="#login-modal" class='modal-trigger'>Login</a></li>
             </ul>
           </div>
         </div>

@@ -1,12 +1,8 @@
 <template>
-    <div id="sign-up">
-        <div class="row">
-            <h3 class='center-align'>Sign Up</h3>
+    <div id="login-modal" class='modal'>
+        <div class="row modal-content">
+            <h3 class='center-align'>Login</h3>
             <div class="col s6 offset-s3 error">{{ error }}</div>
-            <div class="input-field col s6 offset-s3">
-                <input type="text" name="username" v-model='username'>
-                <label for="username">Username</label>
-            </div>
             <div class="input-field col s6 offset-s3">
                 <input type="email" name="email" v-model='email'>
                 <label for="email">Email</label>
@@ -15,8 +11,11 @@
                 <input type="password" name="password" v-model='password'>
                 <label for="password">password</label>
             </div>
+        </div>
+        <div class="row modal-footer">
             <div class="col s6 offset-s3">
-                <button type="submit" @click='signup' class='btn'>Sign Up</button>
+                <button type="submit" @click='login' class='btn'>Login</button>
+                <button class='modal-close btn'>Close</button>
             </div>
         </div>
     </div>
@@ -26,20 +25,18 @@
 import UserService from '@/services/UserService'
 
 export default {
-    name: 'sign-up',
+    name: 'login-modal',
     data: () => {
         return {
-            username: '',
             email: '',
             password: '',
             error: null
         }
     },
     methods: {
-        async signup() {
+        async login() {
             try {
-                const response = await UserService.signup({
-                    username: this.username,
+                const response = await UserService.login({
                     email: this.email,
                     password: this.password
                 })
