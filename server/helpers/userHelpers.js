@@ -3,11 +3,11 @@ const Joi = require('joi');
 module.exports = {
     validateBody: (schema) => {
         return (req, res, next) => {
-            const result = Joi.validate(req.body, schema);
+            const { error } = Joi.validate(req.body, schema);
 
             // checks to see which errors should be returned
-            if (result.error) {
-                switch(result.error.details[0].context.key) {
+            if (error) {
+                switch(error.details[0].context.key) {
                     case 'username':
                         res.status(400).json({
                             error: 'Username is invalid'
@@ -23,15 +23,9 @@ module.exports = {
                             error: 'Invalid information'
                         });
                 }
+            } else {
+                next();
             }
-
-            if (!req.value) {
-                req.value = {};
-            }
-
-            // returns body of authenticated data
-            req.value['body'] = result.value;
-            next();
         }
     },
 
@@ -39,6 +33,10 @@ module.exports = {
     schemas: {
         signUpSchema: Joi.object().keys({
             username: Joi.string().required(),
+            email: Joi.string().email().required(),
+            password: Joi.string().required()
+        }),
+        signInSchema: Joi.object().keys({
             email: Joi.string().email().required(),
             password: Joi.string().required()
         })

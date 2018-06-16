@@ -4,19 +4,19 @@
     <div class="container">
       <router-view/>
     </div>
-    <login-modal/>
+    <SignInModal/>
   </div>
 </template>
 
 <script>
 import Navbar from '@/components/Navbar'
-import LoginModal from '@/components/LoginModal'
+import SignInModal from '@/components/SignInModal'
 
 export default {
   name: 'App',
   components: {
     Navbar,
-    LoginModal
+    SignInModal
   }
 }
 </script>

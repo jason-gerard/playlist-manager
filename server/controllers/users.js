@@ -1,3 +1,8 @@
+const jwt = require('jsonwebtoken');
+
+// imports config file
+const config = require('../config/config');
+
 // imports user model
 const { User } = require('../models');
 
@@ -9,15 +14,19 @@ module.exports = {
             const password = req.body.password;
 
             // creates new user
-            const newUser = await User.create({
+            const user = await User.create({
                 username,
                 email,
                 password
             });
 
+            // creates token for signed up user
+            const token = jwt.sign({user}, config.auth.jwt_secret);
+
             // sends back new user data
             res.status(201).json({
-                user: newUser
+                user,
+                token
             });
         } catch(error) {
             // sends back error message
@@ -27,7 +36,7 @@ module.exports = {
         }
     },
 
-    user_login: async (req, res, next) => {
+    user_sign_in: async (req, res, next) => {
         try {
             const email = req.body.email;
             const password = req.body.password;
@@ -40,20 +49,24 @@ module.exports = {
             });
 
             // checks to see if user was found / exists
-            if (!user || password !== user.password) {
+            if (!user || !user.isValidPassword(password)) {
                 return res.status(403).json({
                     error: 'Email or password was incorrect'
                 });
             }
 
+            // creates token for logged on user
+            const token = jwt.sign({user}, config.auth.jwt_secret);
+
             // sends back user data
             res.status(200).json({
-                user
+                user,
+                token
             });
         } catch(error) {
             // sends back error message
             res.status(500).json({
-                error: 'Error has occured trying to login'
+                error: 'Error has occured trying to sign in'
             });
         }
     }

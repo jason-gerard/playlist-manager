@@ -11,7 +11,7 @@ router.route('/sign-up')
     .post(validateBody(schemas.signUpSchema), UserController.user_sign_up);
 
 // login route
-router.route('/login')
-    .post(UserController.user_login);
+router.route('/sign-in')
+    .post(validateBody(schemas.signInSchema), UserController.user_sign_in);
 
 module.exports = router;

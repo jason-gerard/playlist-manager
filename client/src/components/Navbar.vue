@@ -6,8 +6,13 @@
           <div class="container">
             <router-link tag='a' to='/' class="brand-logo">Playlist-Manager</router-link>
             <ul id="nav-mobile" class="right">
-              <router-link tag='li' to='/sign-up'><a>Sign Up</a></router-link>
-              <li><a href="#login-modal" class='modal-trigger'>Login</a></li>
+              <template v-if='!$store.state.isLoggedIn'>
+                <router-link tag='li' to='/sign-up'><a>Sign Up</a></router-link>
+                <li><a href="#sign-in-modal" class='modal-trigger'>Sign In</a></li>
+              </template>
+              <template v-if='$store.state.isLoggedIn'>
+                <li><a @click='signout'>Sign Out</a></li>
+              </template>
             </ul>
           </div>
         </div>
@@ -19,6 +24,20 @@
       </ul>
     </div>
 </template>
+
+<script>
+export default {
+    methods: {
+      signout() {
+        this.$store.dispatch('setToken', null)
+        this.$store.dispatch('setUser', null)
+        // redirects to home view
+        this.$router.push({name: 'all-songs'})
+      }
+    }
+}
+</script>
+
 
 <style>
 .sidenav-trigger {
