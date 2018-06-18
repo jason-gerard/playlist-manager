@@ -1,8 +1,8 @@
 <template>
-    <div id="add-song">
-        <div class="row">
-            <h3 class='center-align'>Add Song</h3>
-            <div class="col s6 offset-s3 error">{{ error }}</div>
+    <div id="edit-song-modal" class='modal'>
+        <div class="row modal-content">
+            <h3 class='center-align'>Edit Song</h3>
+            <div v-if='error' class="col s6 offset-s3 error">{{ error }}</div>
             <form autocomplete="off">
                 <div class="input-field col s6 offset-s3">
                     <input type="text" name="title" v-model='song.title' required>
@@ -14,11 +14,14 @@
                 </div>
                 <div class="input-field col s6 offset-s3">
                     <input type="text" name="coverArt" v-model='song.coverArt' required>
-                    <label for="password">CoverArt</label>
+                    <label for="coverArt">Cover Art</label>
                 </div>
             </form>
+        </div>
+        <div class="row modal-footer">
             <div class="col s6 offset-s3">
-                <button type="submit" @click='upload' class='btn'>Upload Song</button>
+                <button type="submit" @click="save" class='btn'>Save Changes</button>
+                <button class='modal-close btn'>Close</button>
             </div>
         </div>
     </div>
@@ -28,19 +31,17 @@
 import SongService from '@/services/SongService'
 
 export default {
-    name: 'add-song',
+    name: 'edit-song-modal',
+    props: [
+        'song'
+    ],
     data: () => {
         return {
-            song: {
-                title: null,
-                artist: null,
-                coverArt: null
-            },
             error: null
         }
     },
     methods: {
-        async upload() {
+        async save() {
             // resets error to null
             this.error = null
 
@@ -52,9 +53,10 @@ export default {
             }
 
             try {
-                // post song object to server to store in db
-                await SongService.add(this.song)
-                this.$router.push({ name: 'all-songs' })
+                // send put request to back end to update song
+                await SongService.update(this.song)
+                // closes modal
+                $('#edit-song-modal').modal('close')
             } catch(error) {
                 this.error = error.response.data.error
             }

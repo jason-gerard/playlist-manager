@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import AllSongs from '@/components/AllSongs'
 import AddSong from '@/components/AddSong'
 import SignUp from '@/components/SignUp'
+import ViewSong from '@/components/ViewSong'
 
 Vue.use(Router)
 
@@ -12,6 +13,11 @@ export default new Router({
       path: '/',
       name: 'all-songs',
       component: AllSongs
+    },
+    {
+      path: '/song/:songId',
+      name: 'view-song',
+      component: ViewSong
     },
     {
       path: '/add-song',

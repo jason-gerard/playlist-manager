@@ -1,6 +1,7 @@
 <template>
-    <div id="all-songs">
-        <div v-for='song in songs' v-bind:key="song.id" class="card horizontal s12">
+    <div id="view-song">
+        <div v-if='error' class="col s6 offset-s3 error">{{ error }}</div>
+        <div v-else class="card horizontal s12">
             <div class="card-image">
                 <img :src="song.coverArt">
             </div>
@@ -11,38 +12,46 @@
                     </div>
                     <div class="artist-info">
                         <router-link tag='a' to='/' class="grey-text">{{ song.artist }}</router-link>
-                        <router-link tag='a' :to='song.songPage' class="grey-text text-darken-3">{{song.title}}</router-link>
+                        <router-link tag='a' to='/' class="grey-text text-darken-3">{{song.title}}</router-link>
                     </div>
                 </div>
                 <div class="card-action">
-                    <p style='margin-right: 8px'><i class="fas fa-heart"></i></p>
-                    <p>500</p>
+                    <div class='card-likes'>
+                        <p style='margin-right: 8px'><i class="fas fa-heart"></i></p>
+                        <p>500</p>
+                    </div>
+                    <a href="#edit-song-modal" class='modal-trigger btn edit-song-btn'>Edit Song</a>
                 </div>
             </div>
-        </div>
-        
-        <div class="fixed-action-btn">
-            <router-link to='/add-song' class="btn-floating btn-large teal"><i class="fas fa-plus"></i></router-link>
+            <EditSongModal v-bind:song='song'/>
         </div>
     </div>
 </template>
 
 <script>
 import SongService from '@/services/SongService'
+import EditSongModal from '@/components/modals/EditSongModal'
 
 export default {
-    name: 'all-songs',
+    name: 'view-song',
+    components: {
+        EditSongModal
+    },
     data: () => {
         return {
-            songs: []
+            song: {},
+            error: null
         }
     },
     async created() {
+        // gets song id from parameters
+        const songId = this.$store.state.route.params.songId
         try {
-            // send get request to api for all songs
-            this.songs = (await SongService.getall()).data.songs
+            // fetches one song from db with id
+            this.song = (await SongService.getone(songId)).data.song
+            this.error = (await SongService.getone(songId)).data.error
         } catch(error) {
-            console.log(error);
+            this.error = error.response.data.error
         }
     }
 }
@@ -74,5 +83,11 @@ export default {
 .card {
     height: 150px;
     margin: 20px auto;
+}
+.card-likes {
+    display: flex;
+}
+.edit-song-btn {
+    margin-left: auto;
 }
 </style>

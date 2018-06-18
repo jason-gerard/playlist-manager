@@ -5,6 +5,7 @@ const cors = require('cors');
 
 // router imports
 const userRoutes = require('./routes/users');
+const songRoutes = require('./routes/songs');
 
 // inits app
 const app = express();
@@ -18,5 +19,6 @@ app.use(cors());
 
 // router middleware
 app.use('/api/users', userRoutes);
+app.use('/api/songs', songRoutes);
 
 module.exports = app;

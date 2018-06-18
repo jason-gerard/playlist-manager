@@ -7,7 +7,7 @@ const config = require('../config/config');
 const { User } = require('../models');
 
 module.exports = {
-    user_sign_up: async (req, res, next) => {
+    sign_up: async (req, res, next) => {
         try {
             const username = req.body.username;
             const email = req.body.email;
@@ -36,7 +36,7 @@ module.exports = {
         }
     },
 
-    user_sign_in: async (req, res, next) => {
+    sign_in: async (req, res, next) => {
         try {
             const email = req.body.email;
             const password = req.body.password;
@@ -56,7 +56,7 @@ module.exports = {
             }
 
             // creates token for logged on user
-            const token = jwt.sign({user}, config.auth.jwt_secret);
+            const token = jwt.sign({ user }, config.auth.jwt_secret);
 
             // sends back user data
             res.status(200).json({

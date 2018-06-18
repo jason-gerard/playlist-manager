@@ -12,6 +12,7 @@ const sequelize = new Sequelize(
 
 // imports all models
 db.User = sequelize.import(__dirname + '/user.js');
+db.Song = sequelize.import(__dirname + '/song.js');
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

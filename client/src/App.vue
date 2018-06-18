@@ -10,7 +10,7 @@
 
 <script>
 import Navbar from '@/components/Navbar'
-import SignInModal from '@/components/SignInModal'
+import SignInModal from '@/components/modals/SignInModal'
 
 export default {
   name: 'App',
@@ -20,3 +20,9 @@ export default {
   }
 }
 </script>
+
+<style>
+.error {
+  color: red;
+}
+</style>
