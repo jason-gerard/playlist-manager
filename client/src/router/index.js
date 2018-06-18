@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import AllSongs from '@/components/AllSongs'
 import AddSong from '@/components/AddSong'
 import SignUp from '@/components/SignUp'
+import UserProfile from '@/components/UserProfile'
 import ViewSong from '@/components/ViewSong'
 
 Vue.use(Router)
@@ -10,7 +11,7 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/',
+      path: '/songs',
       name: 'all-songs',
       component: AllSongs
     },
@@ -28,6 +29,15 @@ export default new Router({
       path: '/sign-up',
       name: 'sign-up',
       component: SignUp
+    },
+    {
+      path: '/user/:userId',
+      name: 'user-profile',
+      component: UserProfile
+    },
+    {
+      path: '*',
+      redirect: 'songs'
     }
   ]
 })

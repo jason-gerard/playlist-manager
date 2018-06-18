@@ -59,7 +59,7 @@ export default {
                 this.$store.dispatch('setToken', response.data.token)
                 this.$store.dispatch('setUser', response.data.user)
                 // redirects to home view
-                this.$router.push({name: 'all-songs'})
+                this.$router.push({name: 'songs'})
             } catch(error) {
                 // displays error
                 this.error = error.response.data.error

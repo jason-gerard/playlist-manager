@@ -52,9 +52,15 @@ export default {
             }
 
             try {
-                // post song object to server to store in db
-                await SongService.add(this.song)
-                this.$router.push({ name: 'all-songs' })
+                // post song object to server to store in db and gets song in repsonse
+                const song = await SongService.add(this.song)
+                // redirects user to new song page
+                this.$router.push({
+                    name: 'view-song',
+                    params: {
+                        songId: song.data.song.id
+                    }
+                })
             } catch(error) {
                 this.error = error.response.data.error
             }

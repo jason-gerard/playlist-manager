@@ -32,7 +32,7 @@ export default {
         this.$store.dispatch('setToken', null)
         this.$store.dispatch('setUser', null)
         // redirects to home view
-        this.$router.push({name: 'all-songs'})
+        this.$router.push({name: 'songs'})
       }
     }
 }

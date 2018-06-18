@@ -12,7 +12,7 @@
                     </div>
                     <div class="artist-info">
                         <router-link tag='a' to='/' class="grey-text">{{ song.artist }}</router-link>
-                        <router-link tag='a' to='/' class="grey-text text-darken-3">{{song.title}}</router-link>
+                        <a class="grey-text text-darken-3">{{song.title}}</a>
                     </div>
                 </div>
                 <div class="card-action">

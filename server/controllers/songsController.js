@@ -13,7 +13,7 @@ formatSongData = song => {
 }
 
 module.exports = {
-    get_all: async (req, res, next) => {
+    get_all_songs: async (req, res, next) => {
         try {
             // finds all songs
             const songs = await Song.findAll({});
@@ -31,7 +31,7 @@ module.exports = {
         }
     },
 
-    add: async (req, res, next) => {
+    add_song: async (req, res, next) => {
         try {
             const songData = {
                 title: req.body.title,
@@ -53,7 +53,7 @@ module.exports = {
         }
     },
 
-    get_one: async (req, res, next) => {
+    get_song: async (req, res, next) => {
         try {
             // gets song id from params
             const songId = req.params.songId;
@@ -78,27 +78,48 @@ module.exports = {
         }
     },
 
-    update: async (req, res, next) => {
+    update_song: async (req, res, next) => {
         try {
             const songData = {
+                id: req.params.songId,
                 title: req.body.title,
                 artist: req.body.artist,
                 coverArt: req.body.coverArt
             }
             // updates song in db
-            const song = await Song.update(songData, {
+            await Song.update(songData, {
                 where: {
-                    id: req.params.songId
+                    id: songData.id
                 }
             });
 
             // sends back song
             res.status(200).json({
-                song: formatSongData(song)
+                song: formatSongData(songData)
             });
         } catch(error) {
             res.status(500).json({
-                error:'There was an error updating the song ' + error
+                error:'There was an error updating the song'
+            });
+        }
+    },
+
+    delete_song: async (req, res, next) => {
+        try {
+            // deletes song in db
+            await Song.destroy({
+                where: {
+                    id: req.params.songId
+                }
+            });
+
+            // sends back success message
+            res.status(200).json({
+                message: 'Successfully deleted song'
+            });
+        } catch(error) {
+            res.status(500).json({
+                error:'There was an error deleting the song'
             });
         }
     }

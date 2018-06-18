@@ -14,4 +14,16 @@ router.route('/sign-up')
 router.route('/sign-in')
     .post(validateBody(schemas.signInSchema), UserController.sign_in);
 
+// gets user profile
+router.route('/:userId')
+    .get(UserController.get_user);
+
+// updates user
+router.route('/:userId')
+    .put(UserController.update_user);
+
+// deletes user
+router.route('/:userId')
+    .delete(UserController.delete_user);
+
 module.exports = router;
