@@ -51,16 +51,20 @@ export default {
 
             try {
                 // send api request to back end to signin in and auth user
-                const response = await UserService.signin({
-                    email: this.email,
-                    password: this.password
-                })
+                const response = await UserService.signin(this.user)
 
                 // sets state for token and user
                 this.$store.dispatch('setToken', response.data.token)
                 this.$store.dispatch('setUser', response.data.user)
                 // closes modal on success
                 $('#sign-in-modal').modal('close')
+                // redirects to home view
+                this.$router.push({
+                    name: 'user-profile',
+                    params: {
+                        userId: this.$store.state.user.id
+                    }
+                })
             } catch(error) {
                 // displays error
                 this.error = error.response.data.error

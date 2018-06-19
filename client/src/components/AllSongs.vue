@@ -10,7 +10,7 @@
                         <i class="fas fa-play-circle"></i>
                     </div>
                     <div class="artist-info">
-                        <router-link tag='a' to='/' class="grey-text">{{ song.artist }}</router-link>
+                        <router-link tag='a' to='/user/' class="grey-text">{{ song.artist }}</router-link>
                         <router-link tag='a' :to='song.songPage' class="grey-text text-darken-3">{{song.title}}</router-link>
                     </div>
                 </div>

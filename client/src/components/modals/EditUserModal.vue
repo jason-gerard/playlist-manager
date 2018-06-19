@@ -1,8 +1,8 @@
 <template>
-    <div id="sign-up">
-        <div class="row">
-            <h3 class='center-align'>Sign Up</h3>
-            <div class="col s6 offset-s3 error">{{ error }}</div>
+    <div id="edit-user-modal" class='modal'>
+        <div class="row modal-content">
+            <h3 class='center-align'>Edit User</h3>
+            <div v-if='error' class="col s6 offset-s3 error">{{ error }}</div>
             <form autocomplete="off">
                 <div class="input-field col s6 offset-s3">
                     <input type="text" name="username" v-model='user.username' required>
@@ -14,11 +14,14 @@
                 </div>
                 <div class="input-field col s6 offset-s3">
                     <input type="password" name="password" v-model='user.password' required>
-                    <label for="password">password</label>
+                    <label for="password">Password</label>
                 </div>
             </form>
+        </div>
+        <div class="row modal-footer">
             <div class="col s6 offset-s3">
-                <button type="submit" @click='signup' class='btn'>Sign Up</button>
+                <button type="submit" @click="update" class='btn'>Save Changes</button>
+                <button class='modal-close btn'>Close</button>
             </div>
         </div>
     </div>
@@ -28,19 +31,17 @@
 import UserService from '@/services/UserService'
 
 export default {
-    name: 'sign-up',
+    name: 'edit-user-modal',
+    props: [
+        'user'
+    ],
     data: () => {
         return {
-            user: {
-                username: '',
-                email: '',
-                password: ''
-            },
             error: null
         }
     },
     methods: {
-        async signup() {
+        async update() {
             // resets error to null
             this.error = null
 
@@ -52,21 +53,11 @@ export default {
             }
 
             try {
-                // send api request to back end to create and auth user
-                const response = await UserService.signup(this.user)
-
-                // sets state for token and user
-                this.$store.dispatch('setToken', response.data.token)
-                this.$store.dispatch('setUser', response.data.user)
-                // redirects to home view
-                this.$router.push({
-                    name: 'user-profile',
-                    params: {
-                        userId: this.$store.state.user.id
-                    }
-                })
+                // send put request to back end to update user
+                await UserService.update(this.user)
+                // closes modal
+                $('#edit-user-modal').modal('close')
             } catch(error) {
-                // displays error
                 this.error = error.response.data.error
             }
         }

@@ -6,8 +6,11 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     strict: true,
     state: {
+        // jwt token
         token: null,
+        // user object
         user: null,
+        // boolean value
         isLoggedIn: false
     },
     mutations: {

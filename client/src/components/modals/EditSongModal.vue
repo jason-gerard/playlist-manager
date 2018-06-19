@@ -20,7 +20,7 @@
         </div>
         <div class="row modal-footer">
             <div class="col s6 offset-s3">
-                <button type="submit" @click="save" class='btn'>Save Changes</button>
+                <button type="submit" @click="update" class='btn'>Save Changes</button>
                 <button class='modal-close btn'>Close</button>
             </div>
         </div>
@@ -41,7 +41,7 @@ export default {
         }
     },
     methods: {
-        async save() {
+        async update() {
             // resets error to null
             this.error = null
 

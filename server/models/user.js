@@ -32,7 +32,6 @@ module.exports = (sequelize, DataTypes) => {
 
     // hash password before data is saved to db and when it is updated
     User.beforeSave(hashPassword);
-    User.beforeUpdate(hashPassword);
 
     // method to compare hashed passwords
     User.prototype.isValidPassword = function(password) {

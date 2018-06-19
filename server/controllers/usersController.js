@@ -101,12 +101,18 @@ module.exports = {
 
     update_user: async (req, res, next) => {
         try {
-            const userData = {
+            let userData = {
                 id: req.params.userId,
                 username: req.body.username,
                 email: req.body.email,
                 password: req.body.password
             }
+            
+            // checks to see if password is empty
+            // if (userData.password == undefined) {
+            //     delete userData.password;
+            // }
+            // console.log(userData);
             // updates user in db
             await User.update(userData, {
                 where: {

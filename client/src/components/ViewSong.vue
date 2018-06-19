@@ -20,7 +20,10 @@
                         <p style='margin-right: 8px'><i class="fas fa-heart"></i></p>
                         <p>500</p>
                     </div>
-                    <a href="#edit-song-modal" class='modal-trigger btn edit-song-btn'>Edit Song</a>
+                    <div class="song-options">
+                        <a href="#edit-song-modal" class='modal-trigger btn edit-song-btn'>Edit</a>
+                        <a @click='delete_song' class='btn red edit-song-btn'>Delete</a>
+                    </div>
                 </div>
             </div>
             <EditSongModal v-bind:song='song'/>
@@ -52,6 +55,20 @@ export default {
             this.error = (await SongService.getone(songId)).data.error
         } catch(error) {
             this.error = error.response.data.error
+        }
+    },
+    methods: {
+        async delete_song() {
+            try {
+                // sends delete request to server
+                const song = await SongService.delete(this.song.id)
+                // redirects user to new song page
+                this.$router.push({
+                    name: 'all-songs'
+                })
+            } catch(error) {
+                this.error = error.response.data.error
+            }
         }
     }
 }
@@ -87,7 +104,7 @@ export default {
 .card-likes {
     display: flex;
 }
-.edit-song-btn {
+.song-options {
     margin-left: auto;
 }
 </style>
