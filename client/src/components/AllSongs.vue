@@ -1,8 +1,6 @@
 <template>
     <div id="all-songs">
-        <div v-for='song in songs' v-bind:key="song.id">
-            <SongView :song='song'/>
-        </div>
+        <SongView :song='song' v-for='song in songs' v-bind:key="song.id" v-on:remove='getAllSongs'/>
         
         <div class="fixed-action-btn">
             <router-link to='/add-song' class="btn-floating btn-large teal"><i class="fas fa-plus"></i></router-link>
@@ -24,13 +22,18 @@ export default {
             songs: []
         }
     },
-    async created() {
-        try {
-            // send get request to api for all songs
-            this.songs = (await SongService.getall()).data.songs
-        } catch(error) {
-            console.log(error);
+    methods: {
+        async getAllSongs() {
+            try {
+                // send get request to api for all songs
+                this.songs = (await SongService.getall()).data.songs
+            } catch(error) {
+                console.log(error);
+            }
         }
+    },
+    async created() {
+        this.getAllSongs()
     }
 }
 </script>

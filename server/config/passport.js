@@ -73,10 +73,10 @@ module.exports = {
             }
 
             // gets song artist id
-            let songArtistId = song.artistId;
+            let songUserId = song.userId;
 
             // compares id by value
-            if (userId != songArtistId) {
+            if (userId != songUserId) {
                 // returns unauthorized error
                 return res.status(401).json({
                     error: "You are unauthorized to make this change"

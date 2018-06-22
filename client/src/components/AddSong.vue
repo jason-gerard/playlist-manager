@@ -29,7 +29,6 @@ export default {
         return {
             song: {
                 title: null,
-                artist: null,
                 coverArt: null
             },
             error: null
@@ -52,7 +51,7 @@ export default {
                 const song = await SongService.add(this.song)
                 // redirects user to new song page
                 this.$router.push({
-                    name: 'view-song',
+                    name: 'single-song',
                     params: {
                         songId: song.data.song.id
                     }

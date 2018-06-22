@@ -6,15 +6,15 @@
                 <div class="col s4">
                     <h4>Username: {{ user.username }}</h4>
                     <h5>Email: {{ user.email }}</h5>
-                    <div class="user-options">
+                    <div class="user-options" v-if='$store.state.isLoggedIn && $store.state.user.id === user.id'>
                         <a href="#edit-user-modal" class='modal-trigger btn'>Edit</a>
-                        <a @click='delete_user' class='btn red edit-song-btn'>Delete</a>
+                        <a @click='deleteUser' class='btn red edit-song-btn'>Delete</a>
                     </div>
                 </div>
                 <div class="col s8">
                     <h3>{{ user.username }}'s Songs</h3>
-                    <div v-for='song in user.songs' v-bind:key="song.id">
-                        <SongView :song='song'/>
+                    <div class="user-songs">
+                        <SongView :song='song' v-for='song in user.songs' v-bind:key="song.id" v-on:remove='getUserData()'/>
                     </div>
                 </div>
             </div>
@@ -40,20 +40,28 @@ export default {
             error: null
         }
     },
-    async created() {
-        // gets user id from parameters
-        const userId = this.$store.state.route.params.userId
-        try {
-            // fetches the user data from db
-            let response = (await UserService.getone(userId)).data
-            this.user = response.user
-            this.error = response.error
-        } catch(error) {
-            this.error = error.response.data.error
+    watch: {
+        '$route.params.userId' () {
+            this.getUserData()
         }
     },
+    async created() {
+        this.getUserData()
+    },
     methods: {
-        async delete_user () {
+        async getUserData() {
+            // gets user id from parameters
+            const userId = this.$store.state.route.params.userId
+            try {
+                // fetches the user data from db
+                let response = (await UserService.getone(userId)).data
+                this.user = response.user
+                this.error = response.error
+            } catch(error) {
+                this.error = error.response.data.error
+            }
+        },
+        async deleteUser () {
             try {
                 // sends delete request to server
                 const song = await UserService.delete(this.user.id)

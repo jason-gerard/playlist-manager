@@ -19,9 +19,9 @@
                         <p style='margin-right: 8px'><i class="fas fa-heart"></i></p>
                         <p>500</p>
                     </div>
-                    <div class="song-options">
+                    <div class="song-options" v-if="$store.state.isLoggedIn && $store.state.user.id === song.userId">
                         <a :href="'#edit-song-modal-' + song.id" class='modal-trigger btn edit-song-btn'>Edit</a>
-                        <a @click='delete_song' class='btn red edit-song-btn'>Delete</a>
+                        <a @click='deleteSong' class='btn red edit-song-btn'>Delete</a>
                     </div>
                 </div>
             </div>
@@ -43,14 +43,12 @@ export default {
         'song'
     ],
     methods: {
-        async delete_song() {
+        async deleteSong() {
             try {
                 // sends delete request to server
                 const song = await SongService.delete(this.song.id)
-                // redirects user to new song page
-                this.$router.push({
-                    name: 'all-songs'
-                })
+
+                this.$emit('remove')
             } catch(error) {
                 this.error = error.response.data.error
             }

@@ -51,8 +51,9 @@ export default {
             try {
                 // send put request to back end to update song
                 await SongService.update(this.song)
+                console.log('should work');
                 // closes modal
-                $('#edit-song-modal').modal('close')
+                $('#edit-song-modal-' + this.song.id).modal('close')
             } catch(error) {
                 this.error = error.response.data.error
             }

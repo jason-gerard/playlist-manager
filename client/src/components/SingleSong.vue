@@ -1,7 +1,7 @@
 <template>
     <div id="view-song">
         <div v-if='error' class="col s6 offset-s3 error">{{ error }}</div>
-        <SongView v-else v-bind:song="song"/>
+        <SongView v-else v-bind:song="song" v-on:remove="$router.push({ name: 'all-songs' })"/>
     </div>
 </template>
 
@@ -10,7 +10,7 @@ import SongService from '@/services/SongService'
 import SongView from '@/components/SongView'
 
 export default {
-    name: 'view-song',
+    name: 'single-song',
     components: {
         SongView
     },

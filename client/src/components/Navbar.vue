@@ -21,7 +21,9 @@
 
       <ul id="slide-out" class="sidenav">
         <router-link tag='li' to='/'><a class="sidenav-close">Home</a></router-link>
-        <router-link tag='li' to='/add-song'><a class="sidenav-close">Add Song</a></router-link>
+        <template v-if='$store.state.isLoggedIn'>
+          <router-link tag='li' to='/add-song'><a class="sidenav-close">Add Song</a></router-link>
+        </template>
       </ul>
     </div>
 </template>

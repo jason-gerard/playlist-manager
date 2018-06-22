@@ -1,0 +1,26 @@
+[
+    {
+        "title": "Jase Song 1",
+        "user": "jase",
+        "userId": 1,
+        "coverArt": "http://playercdn.listenlive.co/templates/StandardPlayerV4/webroot/img/default-cover-art.png"
+    },
+    {
+        "title": "Jase Song 2",
+        "user": "jase",
+        "userId": 1,
+        "coverArt": "http://playercdn.listenlive.co/templates/StandardPlayerV4/webroot/img/default-cover-art.png"
+    },
+    {
+        "title": "Jase2 Song 1",
+        "user": "jase2",
+        "userId": 2,
+        "coverArt": "http://playercdn.listenlive.co/templates/StandardPlayerV4/webroot/img/default-cover-art.png"
+    },
+    {
+        "title": "Jase2 Song 2",
+        "user": "jase2",
+        "userId": 2,
+        "coverArt": "http://playercdn.listenlive.co/templates/StandardPlayerV4/webroot/img/default-cover-art.png"
+    }
+]
