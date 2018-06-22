@@ -2,10 +2,22 @@
     <div id="user-profile">
         <div v-if='error' class="col s6 offset-s3 error">{{ error }}</div>
         <div v-else>
-            <h3>Username: {{ user.username }}</h3>
-            <h5>Email: {{ user.email }}</h5>
-            <a href="#edit-user-modal" class='modal-trigger btn'>Edit</a>
-            <a @click='delete_user' class='btn red edit-song-btn'>Delete</a>
+            <div class="row">
+                <div class="col s4">
+                    <h4>Username: {{ user.username }}</h4>
+                    <h5>Email: {{ user.email }}</h5>
+                    <div class="user-options">
+                        <a href="#edit-user-modal" class='modal-trigger btn'>Edit</a>
+                        <a @click='delete_user' class='btn red edit-song-btn'>Delete</a>
+                    </div>
+                </div>
+                <div class="col s8">
+                    <h3>{{ user.username }}'s Songs</h3>
+                    <div v-for='song in user.songs' v-bind:key="song.id">
+                        <SongView :song='song'/>
+                    </div>
+                </div>
+            </div>
             <EditUserModal v-bind:user='user'/>
         </div>
     </div>
@@ -14,11 +26,13 @@
 <script>
 import UserService from '@/services/UserService'
 import EditUserModal from '@/components/modals/EditUserModal'
+import SongView from '@/components/SongView'
 
 export default {
     name: 'user-profile',
     components: {
-        EditUserModal
+        EditUserModal,
+        SongView
     },
     data: () => {
         return {
@@ -54,3 +68,9 @@ export default {
     }
 }
 </script>
+
+<style>
+.user-options {
+    margin-top: 20px;
+}
+</style>

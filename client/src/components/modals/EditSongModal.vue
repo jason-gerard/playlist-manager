@@ -1,5 +1,5 @@
 <template>
-    <div id="edit-song-modal" class='modal'>
+    <div :id="'edit-song-modal-' + song.id" class='modal'>
         <div class="row modal-content">
             <h3 class='center-align'>Edit Song</h3>
             <div v-if='error' class="col s6 offset-s3 error">{{ error }}</div>
@@ -7,10 +7,6 @@
                 <div class="input-field col s6 offset-s3">
                     <input type="text" name="title" v-model='song.title' required>
                     <label for="title">Title</label>
-                </div>
-                <div class="input-field col s6 offset-s3">
-                    <input type="text" name="artist" v-model='song.artist' required>
-                    <label for="artist">Artist</label>
                 </div>
                 <div class="input-field col s6 offset-s3">
                     <input type="text" name="coverArt" v-model='song.coverArt' required>

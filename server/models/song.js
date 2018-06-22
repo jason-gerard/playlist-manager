@@ -4,13 +4,22 @@ module.exports = (sequelize, DataTypes) => {
         title: {
             type: DataTypes.STRING
         },
-        artist: {
+        user: {
             type: DataTypes.STRING
+        },
+        userId: {
+            type: DataTypes.INTEGER
         },
         coverArt: {
             type: DataTypes.STRING
         }
     });
+
+    // associations
+    Song.associate = function(models) {
+        // song to user
+        Song.belongsTo(models.User);
+    }
 
     // return song schema
     return Song;

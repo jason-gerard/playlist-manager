@@ -3,8 +3,8 @@ const jwt = require('jsonwebtoken');
 // imports config file
 const config = require('../config/config');
 
-// imports user model
-const { User } = require('../models');
+// imports user and song model
+const { User, Song } = require('../models');
 
 module.exports = {
     sign_up: async (req, res, next) => {
@@ -19,7 +19,7 @@ module.exports = {
             const user = await User.create(userData);
 
             // creates token for signed up user
-            const token = jwt.sign({user}, config.auth.jwt_secret);
+            const token = jwt.sign({ sub: user.id }, config.auth.jwt_secret);
 
             // sends back new user data
             res.status(201).json({
@@ -54,7 +54,7 @@ module.exports = {
             }
 
             // creates token for logged on user
-            const token = jwt.sign({ user }, config.auth.jwt_secret);
+            const token = jwt.sign({ sub: user.id }, config.auth.jwt_secret);
 
             // sends back user data
             res.status(200).json({
@@ -69,12 +69,20 @@ module.exports = {
         }
     },
 
-    get_user: async (req, res, next) => {
+    get_one: async (req, res, next) => {
         try {
             // gets user id from params
             const userId = req.params.userId;
+
             // find user by id
             const user = await User.findById(userId);
+
+            // get all song with same user id
+            let songs = await Song.findAll({
+                where: {
+                    userId
+                }
+            });
 
             // checks to see if user exists
             if (!user) {
@@ -88,7 +96,8 @@ module.exports = {
                 user: {
                     id: user.id,
                     username: user.username,
-                    email: user.email
+                    email: user.email,
+                    songs
                 }
             });
         } catch(error) {
@@ -99,35 +108,27 @@ module.exports = {
         }
     },
 
-    update_user: async (req, res, next) => {
+    update_one: async (req, res, next) => {
         try {
-            let userData = {
-                id: req.params.userId,
-                username: req.body.username,
-                email: req.body.email,
-                password: req.body.password
-            }
-            
-            // checks to see if password is empty
-            // if (userData.password == undefined) {
-            //     delete userData.password;
-            // }
-            // console.log(userData);
+            // gets user id
+            let id = req.params.userId;
+
+            // gets data to be updated
+            const userData = req.body;
+
+            console.log(userData);
+
             // updates user in db
             await User.update(userData, {
                 where: {
-                    id: userData.id
+                    id
                 },
                 individualHooks: true
             });
 
-            // sends back song
+            // sends back success message
             res.status(200).json({
-                user: {
-                    id: userData.id,
-                    username: userData.username,
-                    email: userData.email
-                }
+                message: 'Successfully updated user'
             });
         } catch(error) {
             res.status(500).json({
@@ -136,7 +137,7 @@ module.exports = {
         }
     },
 
-    delete_user: async (req, res, next) => {
+    delete_one: async (req, res, next) => {
         try {
             // deletes user in db
             await User.destroy({

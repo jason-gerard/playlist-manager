@@ -6,14 +6,14 @@ formatSongData = song => {
     return {
         id: song.id,
         title: song.title,
-        artist: song.artist,
-        coverArt: song.coverArt,
-        songPage: '/song/' + song.id
+        user: song.user,
+        userId: song.userId,
+        coverArt: song.coverArt
     };
 }
 
 module.exports = {
-    get_all_songs: async (req, res, next) => {
+    get_all: async (req, res, next) => {
         try {
             // finds all songs
             const songs = await Song.findAll({});
@@ -31,11 +31,12 @@ module.exports = {
         }
     },
 
-    add_song: async (req, res, next) => {
+    add_one: async (req, res, next) => {
         try {
             const songData = {
                 title: req.body.title,
-                artist: req.body.artist,
+                user: req.user.username,
+                userId: req.user.id,
                 coverArt: req.body.coverArt
             }
 
@@ -53,19 +54,12 @@ module.exports = {
         }
     },
 
-    get_song: async (req, res, next) => {
+    get_one: async (req, res, next) => {
         try {
             // gets song id from params
             const songId = req.params.songId;
             // find song by id
             const song = await Song.findById(songId);
-
-            // checks to see if song exists
-            if (!song) {
-                return res.status(404).json({
-                    error: 'Song not found'
-                });
-            }
 
             // sends back song
             res.status(200).json({
@@ -78,24 +72,24 @@ module.exports = {
         }
     },
 
-    update_song: async (req, res, next) => {
+    update_one: async (req, res, next) => {
         try {
-            const songData = {
-                id: req.params.songId,
-                title: req.body.title,
-                artist: req.body.artist,
-                coverArt: req.body.coverArt
-            }
+            // gets song id
+            let id = req.params.songId;
+
+            // gets data to be updated
+            const songData = req.body;
+
             // updates song in db
             await Song.update(songData, {
                 where: {
-                    id: songData.id
+                    id
                 }
             });
 
-            // sends back song
+            // sends back success message
             res.status(200).json({
-                song: formatSongData(songData)
+                message: 'Successfully updated song'
             });
         } catch(error) {
             res.status(500).json({
@@ -104,12 +98,15 @@ module.exports = {
         }
     },
 
-    delete_song: async (req, res, next) => {
+    delete_one: async (req, res, next) => {
         try {
+            // gets song id
+            let id = req.params.songId;
+
             // deletes song in db
             await Song.destroy({
                 where: {
-                    id: req.params.songId
+                    id
                 }
             });
 

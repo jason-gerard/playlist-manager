@@ -4,7 +4,7 @@ import AllSongs from '@/components/AllSongs'
 import AddSong from '@/components/AddSong'
 import SignUp from '@/components/SignUp'
 import UserProfile from '@/components/UserProfile'
-import ViewSong from '@/components/ViewSong'
+import SingleSong from '@/components/SingleSong'
 
 Vue.use(Router)
 
@@ -17,8 +17,8 @@ export default new Router({
     },
     {
       path: '/song/:songId',
-      name: 'view-song',
-      component: ViewSong
+      name: 'single-song',
+      component: SingleSong
     },
     {
       path: '/add-song',

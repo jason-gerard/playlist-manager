@@ -1,7 +1,6 @@
 <template>
-    <div id="view-song">
-        <div v-if='error' class="col s6 offset-s3 error">{{ error }}</div>
-        <div v-else class="card horizontal s12">
+    <div id="song-view">
+        <div class="card horizontal s12">
             <div class="card-image">
                 <img :src="song.coverArt">
             </div>
@@ -11,8 +10,8 @@
                         <i class="fas fa-play-circle"></i>
                     </div>
                     <div class="artist-info">
-                        <router-link tag='a' to='/' class="grey-text">{{ song.artist }}</router-link>
-                        <a class="grey-text text-darken-3">{{song.title}}</a>
+                        <router-link tag='a' :to="'/user/' + song.userId" class="grey-text">{{ song.user }}</router-link>
+                        <router-link tag='a' :to="'/song/' + song.id" class="grey-text text-darken-3">{{song.title}}</router-link>
                     </div>
                 </div>
                 <div class="card-action">
@@ -21,7 +20,7 @@
                         <p>500</p>
                     </div>
                     <div class="song-options">
-                        <a href="#edit-song-modal" class='modal-trigger btn edit-song-btn'>Edit</a>
+                        <a :href="'#edit-song-modal-' + song.id" class='modal-trigger btn edit-song-btn'>Edit</a>
                         <a @click='delete_song' class='btn red edit-song-btn'>Delete</a>
                     </div>
                 </div>
@@ -36,27 +35,13 @@ import SongService from '@/services/SongService'
 import EditSongModal from '@/components/modals/EditSongModal'
 
 export default {
-    name: 'view-song',
+    name: 'song-view',
     components: {
         EditSongModal
     },
-    data: () => {
-        return {
-            song: {},
-            error: null
-        }
-    },
-    async created() {
-        // gets song id from parameters
-        const songId = this.$store.state.route.params.songId
-        try {
-            // fetches one song from db with id
-            this.song = (await SongService.getone(songId)).data.song
-            this.error = (await SongService.getone(songId)).data.error
-        } catch(error) {
-            this.error = error.response.data.error
-        }
-    },
+    props: [
+        'song'
+    ],
     methods: {
         async delete_song() {
             try {

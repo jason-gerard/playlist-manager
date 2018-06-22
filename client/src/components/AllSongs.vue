@@ -1,24 +1,7 @@
 <template>
     <div id="all-songs">
-        <div v-for='song in songs' v-bind:key="song.id" class="card horizontal s12">
-            <div class="card-image">
-                <img :src="song.coverArt">
-            </div>
-            <div class="card-stacked">
-                <div class="card-content">
-                    <div>
-                        <i class="fas fa-play-circle"></i>
-                    </div>
-                    <div class="artist-info">
-                        <router-link tag='a' to='/user/' class="grey-text">{{ song.artist }}</router-link>
-                        <router-link tag='a' :to='song.songPage' class="grey-text text-darken-3">{{song.title}}</router-link>
-                    </div>
-                </div>
-                <div class="card-action">
-                    <p style='margin-right: 8px'><i class="fas fa-heart"></i></p>
-                    <p>500</p>
-                </div>
-            </div>
+        <div v-for='song in songs' v-bind:key="song.id">
+            <SongView :song='song'/>
         </div>
         
         <div class="fixed-action-btn">
@@ -29,9 +12,13 @@
 
 <script>
 import SongService from '@/services/SongService'
+import SongView from '@/components/SongView'
 
 export default {
     name: 'all-songs',
+    components: {
+        SongView
+    },
     data: () => {
         return {
             songs: []
@@ -47,32 +34,3 @@ export default {
     }
 }
 </script>
-
-<style>
-.artist-info {
-    display: flex;
-    flex-direction: column;
-}
-.fa-play-circle {
-    font-size: 40px;
-    color: #009688;
-    margin-right: 10px;
-    margin-top: 2px;
-}
-.card-content {
-    display: flex
-}
-.card-action {
-    display: flex;
-}
-.card-action p {
-    margin-top: 7px;
-}
-.card-image {
-    width: 150px;
-}
-.card {
-    height: 150px;
-    margin: 20px auto;
-}
-</style>

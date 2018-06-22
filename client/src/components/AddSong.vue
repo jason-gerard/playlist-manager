@@ -9,10 +9,6 @@
                     <label for="title">Title</label>
                 </div>
                 <div class="input-field col s6 offset-s3">
-                    <input type="text" name="artist" v-model='song.artist' required>
-                    <label for="artist">Artist</label>
-                </div>
-                <div class="input-field col s6 offset-s3">
                     <input type="text" name="coverArt" v-model='song.coverArt' required>
                     <label for="password">CoverArt</label>
                 </div>

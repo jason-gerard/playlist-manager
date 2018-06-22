@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
+// imports all passport packages and files
+const passport = require('passport');
+const passportConfig = require('../config/passport');
+
 // requires user controller
 const UserController = require('../controllers/usersController');
 // requires auth schemas
@@ -16,14 +20,14 @@ router.route('/sign-in')
 
 // gets user profile
 router.route('/:userId')
-    .get(UserController.get_user);
+    .get(UserController.get_one);
 
 // updates user
 router.route('/:userId')
-    .put(UserController.update_user);
+    .put(passport.authenticate('jwt', { session: false }), passportConfig.authenticateUserReqById, UserController.update_one);
 
 // deletes user
 router.route('/:userId')
-    .delete(UserController.delete_user);
+    .delete(passport.authenticate('jwt', { session: false }), passportConfig.authenticateUserReqById, UserController.delete_one);
 
 module.exports = router;
