@@ -10,6 +10,9 @@ const songRoutes = require('./routes/songs');
 // inits app
 const app = express();
 
+// static folder middleware
+app.use('/public', express.static('public'));
+
 // morgan middleware
 app.use(morgan('dev'));
 // body-parser middleware

@@ -14,7 +14,7 @@
                 <div class="col s8">
                     <h3>{{ user.username }}'s Songs</h3>
                     <div class="user-songs">
-                        <SongView :song='song' v-for='song in user.songs' v-bind:key="song.id" v-on:remove='getUserData()'/>
+                        <SongView :song='song' v-for='song in user.songs' v-bind:key="song.id" v-on:remove='getUserData'/>
                     </div>
                 </div>
             </div>

@@ -2,7 +2,7 @@
     <div id="all-songs">
         <SongView :song='song' v-for='song in songs' v-bind:key="song.id" v-on:remove='getAllSongs'/>
         
-        <div class="fixed-action-btn">
+        <div v-if='$store.state.isLoggedIn' class="fixed-action-btn">
             <router-link to='/add-song' class="btn-floating btn-large teal"><i class="fas fa-plus"></i></router-link>
         </div>
     </div>

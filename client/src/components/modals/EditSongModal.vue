@@ -61,3 +61,9 @@ export default {
     }
 }
 </script>
+
+<style>
+.modal-content {
+    width: 100%;
+}
+</style>

@@ -1,6 +1,14 @@
 const express = require('express');
 const router = express.Router();
 
+// imports multer for file uploading
+const multer = require('multer');
+// multer config
+const { multer: multerConfig } = require('../config/config');
+const storage = multer.diskStorage(multerConfig);
+const upload = multer({storage});
+let songData = [{ name: 'coverArt', maxCount: 1 }, { name: 'audioFile', maxCount: 1 }];
+
 // imports all passport packages and files
 const passport = require('passport');
 const passportConfig = require('../config/passport');
@@ -14,7 +22,7 @@ router.route('/')
 
 // adds song
 router.route('/')
-    .post(passport.authenticate('jwt', { session: false }), SongController.add_one);
+    .post(passport.authenticate('jwt', { session: false }), upload.fields(songData), SongController.add_one);
 
 // gets one song
 router.route('/:songId')

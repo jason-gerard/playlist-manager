@@ -1,4 +1,6 @@
 const bcrypt = require('bcryptjs');
+// import filesystem to generate public folder for user
+const fs = require('fs');
 
 // helper function to hash passwords
 async function hashPassword(user, options) {
@@ -41,6 +43,11 @@ module.exports = (sequelize, DataTypes) => {
 
     // hash password before data is saved to db and when it is updated
     User.beforeSave(hashPassword);
+
+    User.afterCreate((user, options) => {
+        // generate public song data folder for user
+        fs.mkdirSync(`./public/song-data/user-${user.id}`);
+    });
 
     // method to compare hashed passwords
     User.prototype.isValidPassword = function(password) {

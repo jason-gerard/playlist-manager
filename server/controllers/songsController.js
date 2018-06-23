@@ -8,7 +8,8 @@ formatSongData = song => {
         title: song.title,
         user: song.user,
         userId: song.userId,
-        coverArt: song.coverArt
+        coverArt: song.coverArt,
+        audioFile: song.audioFile
     };
 }
 
@@ -37,7 +38,8 @@ module.exports = {
                 title: req.body.title,
                 user: req.user.username,
                 userId: req.user.id,
-                coverArt: req.body.coverArt
+                coverArt: `http://localhost:3000/${req.files['coverArt'][0].path}`,
+                audioFile: `http://localhost:3000/${req.files['audioFile'][0].path}`
             }
 
             // adds song to db
@@ -49,7 +51,7 @@ module.exports = {
             });
         } catch(error) {
             res.status(500).json({
-                error:'There was an error uploading the song'
+                error:'There was an error uploading the song' + error
             });
         }
     },

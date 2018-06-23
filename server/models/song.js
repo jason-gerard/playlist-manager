@@ -12,6 +12,9 @@ module.exports = (sequelize, DataTypes) => {
         },
         coverArt: {
             type: DataTypes.STRING
+        },
+        audioFile: {
+            type: DataTypes.STRING
         }
     });
 
