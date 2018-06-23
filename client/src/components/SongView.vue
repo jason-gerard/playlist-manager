@@ -7,7 +7,10 @@
             <div class="card-stacked">
                 <div class="card-content">
                     <div>
-                        <i class="fas fa-play-circle"></i>
+                        <a @click='playOrPause' class='play-or-pause-btn'>
+                            <i v-if='$store.state.musicPlayer.songId == song.id && !$store.state.musicPlayer.isPlaying' class="fas fa-play-circle"></i>
+                            <i v-else class="fas fa-pause-circle"></i>
+                        </a>
                     </div>
                     <div class="artist-info">
                         <router-link tag='a' :to="'/user/' + song.userId" class="grey-text">{{ song.user }}</router-link>
@@ -52,6 +55,10 @@ export default {
             } catch(error) {
                 this.error = error.response.data.error
             }
+        },
+        playOrPause() {
+            // alternates boolean value plays on true pauses on false
+            this.$store.dispatch('playOrPause')
         }
     }
 }
@@ -62,7 +69,7 @@ export default {
     display: flex;
     flex-direction: column;
 }
-.fa-play-circle {
+.fa-play-circle, .fa-pause-circle {
     font-size: 40px;
     color: #009688;
     margin-right: 10px;
@@ -89,5 +96,8 @@ export default {
 }
 .song-options {
     margin-left: auto;
+}
+.play-or-pause-btn {
+    cursor: pointer;
 }
 </style>

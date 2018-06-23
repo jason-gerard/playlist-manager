@@ -32,8 +32,7 @@
 export default {
     methods: {
       signout() {
-        this.$store.dispatch('setToken', null)
-        this.$store.dispatch('setUser', null)
+        this.$store.dispatch('signout')
         // redirects to home view
         this.$router.push({name: 'all-songs'})
       }

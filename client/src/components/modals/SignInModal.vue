@@ -54,8 +54,8 @@ export default {
                 const response = await UserService.signin(this.user)
 
                 // sets state for token and user
-                this.$store.dispatch('setToken', response.data.token)
-                this.$store.dispatch('setUser', response.data.user)
+                this.$store.dispatch('signin', response.data.user, response.data.token)
+
                 // closes modal on success
                 $('#sign-in-modal').modal('close')
                 // redirects to home view
