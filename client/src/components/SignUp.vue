@@ -56,7 +56,7 @@ export default {
                 const response = await UserService.signup(this.user)
 
                 // sets state for token and user
-                this.$store.dispatch('signin', response.data.user, response.data.token)
+                this.$store.dispatch('signin', { user: response.data.user, token: response.data.token })
                 
                 // redirects to home view
                 this.$router.push({

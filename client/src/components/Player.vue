@@ -1,67 +1,55 @@
 <template>
     <div id="player-wrapper">
-        <Player :music="music" ref='player'/>
-        <button @click='playOrPause'>play / pause</button>
-        <button @click='loadSong'>Load Song</button>
+
     </div>
 </template>
 
 <script>
-import VueAplayer from 'vue-aplayer'
-// remove badge for player
-VueAplayer.disableVersionBadge = true
+import { mapState } from 'vuex'
 
 export default {
-    components: {
-        Player: VueAplayer
-    },
-    data: () => {
+    name: 'player',
+    data () {
         return {
-            music: null
+            audio: new Audio()
         }
     },
-    computed: {
-        isPlaying() {
-            return this.$store.getters.getIsPlaying
-        }
-    },
-    watch: {
-        isPlaying() {
-            this.playOrPause(this.isPlaying)
-        }
+    mounted() {
+        this.$store.dispatch('setIsPlaying', false)
     },
     created() {
-        this.loadSong()
+        this.$store.dispatch('loadSong', { file: null, songId: null })
     },
-    methods: {
-        playOrPause(isPlaying) {
-            if (isPlaying) {
-                this.$refs.player.play()
+    computed: mapState(['isPlaying', 'audioFile', 'songId']),
+    watch: {
+        isPlaying(newVal, oldVal) {
+            if(newVal) {
+                setTimeout(() => {
+                    this.audio.play()
+                }, 150)
             } else {
-                this.$refs.player.pause()
+                this.audio.pause()
             }
         },
-        getMusic() {
-            this.music = this.$store.state.musicPlayer.music
-        },
-        loadSong() {
-            this.$store.dispatch('loadSong', {
-                title: 'Esketittt',
-                artist: 'Lil Pump Jet Ski',
-                src: 'http://localhost:3000/public/song-data/default-audio-file.mp3',
-                pic: 'http://localhost:3000/public/song-data/default-cover-art.png'
-            })
-            this.getMusic()
+        songId(newVal, oldVal) {
+            if (this.audioFile) {
+                this.audio.pause()
+                this.audio = new Audio(this.audioFile)
+                setTimeout(() => {
+                    this.audio.play()
+                }, 150)
+                this.$store.dispatch('setIsPlaying', true)
+            }
         }
     }
 }
 </script>
 
 <style>
-.aplayer-body {
+#player-wrapper {
     height: 120px;
 }
-.aplayer-pic {
+.player-cover-art {
     height: 120px!important;
     width: 120px!important;
 }

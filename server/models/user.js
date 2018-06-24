@@ -45,8 +45,11 @@ module.exports = (sequelize, DataTypes) => {
     User.beforeSave(hashPassword);
 
     User.afterCreate((user, options) => {
-        // generate public song data folder for user
-        fs.mkdirSync(`./public/song-data/user-${user.id}`);
+        let path = `./public/song-data/user-${user.id}`;
+        if (!fs.existsSync(path)) {
+            // generate public song data folder for user
+            fs.mkdirSync(path);
+        }
     });
 
     // method to compare hashed passwords

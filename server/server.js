@@ -11,12 +11,12 @@ const { sequelize } = require('./models')
 const server = http.createServer(app);
 
 // opens port and syncs sequelize with db
-sequelize
-    .authenticate()
+let db = sequelize.authenticate()
     .then(() => {
         server.listen(config.port);
         console.log(`Server started on port ${config.port}`);
     })
     .catch(error => {
         console.log(`Unable to connect to db: ${error}`);
-    });
+    })
+    .done();

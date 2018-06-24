@@ -21,4 +21,8 @@ sequelize.sync({force: true})
         songs.map(song => {
             Song.create(song)
         });
-    });
+    })
+    .catch(error => {
+        console.log(`Error with db seed: ${error}`);
+    })
+    .done();

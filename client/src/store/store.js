@@ -10,21 +10,11 @@ export default new Vuex.Store({
     state: {
         // jwt token
         token: null,
-        // user object
         user: null,
-        // boolean value
         isLoggedIn: false,
-        // all state for music player
-        musicPlayer: {
-            music: {
-                title: null,
-                artist: null,
-                src: null,
-                pic: null
-            },
-            isPlaying: false,
-            songId: 2
-        }
+        isPlaying: false,
+        audioFile: null,
+        songId: null
     },
     mutations: {
         setIsLoggedIn(state, isLoggedIn) {
@@ -36,15 +26,21 @@ export default new Vuex.Store({
         setUser (state, user) {
             state.user = user
         },
-        setPlayOrPause(state) {
-            state.musicPlayer.isPlaying = !state.musicPlayer.isPlaying
+        toggleIsPlaying(state) {
+            state.isPlaying = !state.isPlaying
         },
-        setSong(state, song) {
-            state.musicPlayer.music = song
+        setAudioFile(state, file) {
+            state.audioFile = file
+        },
+        setIsPlaying(state, isPlaying) {
+            state.isPlaying = isPlaying
+        },
+        setSongId(state, songId) {
+            state.songId = songId
         }
     },
     actions: {
-        signin({ commit }, user, token) {
+        signin({ commit }, { user, token }) {
             commit('setUser', user)
             commit('setToken', token)
             commit('setIsLoggedIn', true)
@@ -54,16 +50,15 @@ export default new Vuex.Store({
             commit('setToken', null)
             commit('setIsLoggedIn', false)
         },
-        playOrPause ({ commit }) {
-            commit('setPlayOrPause')
+        toggleIsPlaying({ commit }) {
+            commit('toggleIsPlaying')
         },
-        loadSong ({ commit }, song) {
-            commit('setSong', song)
-        }
-    },
-    getters: {
-        getIsPlaying: state => {
-            return state.musicPlayer.isPlaying
+        loadSong({ commit }, {file, songId}) {
+            commit('setAudioFile', file)
+            commit('setSongId', songId)
+        },
+        setIsPlaying({ commit }, isPlaying) {
+            commit('setIsPlaying', isPlaying)
         }
     }
 })

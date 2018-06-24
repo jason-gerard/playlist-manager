@@ -7,9 +7,9 @@
             <div class="card-stacked">
                 <div class="card-content">
                     <div>
-                        <a @click='playOrPause' class='play-or-pause-btn'>
-                            <i v-if='$store.state.musicPlayer.songId == song.id && !$store.state.musicPlayer.isPlaying' class="fas fa-play-circle"></i>
-                            <i v-else class="fas fa-pause-circle"></i>
+                        <a @click='playSong' class='play-or-pause-btn'>
+                            <i v-if='isPlaying && songId == this.song.id' class="fas fa-pause-circle"></i>
+                            <i v-else class="fas fa-play-circle"></i>
                         </a>
                     </div>
                     <div class="artist-info">
@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import SongService from '@/services/SongService'
 import EditSongModal from '@/components/modals/EditSongModal'
 
@@ -45,6 +46,7 @@ export default {
     props: [
         'song'
     ],
+    computed: mapState(['isPlaying', 'songId']),
     methods: {
         async deleteSong() {
             try {
@@ -56,9 +58,23 @@ export default {
                 this.error = error.response.data.error
             }
         },
-        playOrPause() {
-            // alternates boolean value plays on true pauses on false
-            this.$store.dispatch('playOrPause')
+        loadSong() {
+            // updates audio file in vuex
+            this.$store.dispatch('loadSong', { file: this.song.audioFile, songId: this.song.id })
+        },
+        togglePlayPause() {
+            // toggles is playing boolean
+            this.$store.dispatch('toggleIsPlaying')
+        },
+        playSong() {
+            // loads new song
+            if (this.songId != this.song.id) {
+                this.loadSong()
+            } else {
+                // if not new song will toggle play pause
+                this.togglePlayPause()
+            }
+            
         }
     }
 }
