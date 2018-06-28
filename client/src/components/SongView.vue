@@ -34,86 +34,93 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import SongService from '@/services/SongService'
-import EditSongModal from '@/components/modals/EditSongModal'
+import { mapState } from 'vuex';
+import SongService from '@/services/SongService';
+import EditSongModal from '@/components/modals/EditSongModal';
 
 export default {
-    name: 'song-view',
-    components: {
-        EditSongModal
-    },
-    props: [
-        'song'
-    ],
-    computed: mapState(['isPlaying', 'songId']),
-    methods: {
-        async deleteSong() {
-            try {
-                // sends delete request to server
-                const song = await SongService.delete(this.song.id)
+	name: 'song-view',
+	components: {
+		EditSongModal
+	},
+	props: ['song'],
+	computed: mapState(['isPlaying', 'songId']),
+	methods: {
+		async deleteSong() {
+			try {
+				// sends delete request to server
+				const song = await SongService.delete(this.song.id);
 
-                this.$emit('remove')
-            } catch(error) {
-                this.error = error.response.data.error
-            }
-        },
-        loadSong() {
-            // updates audio file in vuex
-            this.$store.dispatch('loadSong', { file: this.song.audioFile, songId: this.song.id })
-        },
-        togglePlayPause() {
-            // toggles is playing boolean
-            this.$store.dispatch('toggleIsPlaying')
-        },
-        playSong() {
-            // loads new song
-            if (this.songId != this.song.id) {
-                this.loadSong()
-            } else {
-                // if not new song will toggle play pause
-                this.togglePlayPause()
-            }
-            
-        }
-    }
-}
+				this.$emit('remove');
+			} catch (error) {
+				this.error = error.response.data.error;
+			}
+		},
+		loadSong() {
+			// updates song info
+			this.$store.dispatch('setSong', {
+				title: this.song.title,
+				user: this.song.user,
+				coverArt: this.song.coverArt
+			});
+			// updates audio file in vuex
+			this.$store.dispatch('loadSong', {
+				file: this.song.audioFile,
+				songId: this.song.id
+			});
+		},
+		togglePlayPause() {
+			// toggles is playing boolean
+			this.$store.dispatch('toggleIsPlaying');
+		},
+		playSong() {
+			// loads new song
+			if (this.songId != this.song.id) {
+				this.loadSong();
+			} else {
+				// if not new song will toggle play pause
+				this.togglePlayPause();
+			}
+		}
+	}
+};
 </script>
 
 <style>
 .artist-info {
-    display: flex;
-    flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
-.fa-play-circle, .fa-pause-circle {
-    font-size: 40px;
-    color: #009688;
-    margin-right: 10px;
-    margin-top: 2px;
+.fa-play-circle,
+.fa-pause-circle {
+	font-size: 40px;
+	color: #009688;
+	margin-right: 10px;
+	margin-top: 2px;
 }
 .card-content {
-    display: flex
+	display: flex;
 }
 .card-action {
-    display: flex;
+	display: flex;
 }
 .card-action p {
-    margin-top: 7px;
+	margin-top: 7px;
 }
 .card-image {
-    width: 150px;
+	width: 150px;
 }
 .card {
-    height: 150px;
-    margin: 20px auto;
+	height: 150px;
+	margin: 20px auto;
 }
 .card-likes {
-    display: flex;
+	display: flex;
 }
 .song-options {
-    margin-left: auto;
+	margin-left: auto;
 }
 .play-or-pause-btn {
-    cursor: pointer;
+	cursor: pointer;
 }
 </style>
