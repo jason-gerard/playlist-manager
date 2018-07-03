@@ -1,6 +1,6 @@
 # playlist-manager
 
-Web app which allows users to sign up and upload their songs and cover art, and have other people listen to their songs, like them and add them to playlists. The app is a full RESTful API using JWT token for authentication and Vue.js to build a SPA on the front-end.
+Web app which allows users to sign up and upload their songs and cover art, and have other people listen to their songs, like them and add them to playlists. The app is a full RESTful API using json web tokens (JWT) for authentication and Vue.js to build a SPA on the front-end.
 
 ## Getting Started
 
