@@ -10,28 +10,28 @@
 </template>
 
 <script>
-import Navbar from '@/components/Navbar'
-import SignInModal from '@/components/modals/SignInModal'
-import Player from '@/components/Player'
+import Navbar from '@/components/Navbar';
+import SignInModal from '@/components/modals/SignInModal';
+import Player from '@/components/Player';
 
 export default {
-  name: 'App',
-  components: {
-    Navbar,
-    SignInModal,
-    Player
-  }
-}
+	name: 'App',
+	components: {
+		Navbar,
+		SignInModal,
+		Player
+	}
+};
 </script>
 
 <style>
 .error {
-  color: red;
+	color: red;
 }
 .player {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
 }
 </style>

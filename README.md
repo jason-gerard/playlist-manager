@@ -30,6 +30,12 @@ Next run the command to populate the app with some test users and songs, this wi
 node seed
 ```
 
+Finally go into the project directory start dev env
+
+```
+npm start (script which runs nodemon)
+```
+
 ## Built With
 
 -   Express Node.js framework
