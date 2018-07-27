@@ -1,0 +1,29 @@
+[
+	{
+		"title": "ESSKEETIT",
+		"user": "Lil Pump",
+		"userId": 1,
+		"coverArt":
+			"http://localhost:3000/public/song-data/user-1/Lil-Pump-ESSKEETIT.png",
+		"audioFile":
+			"http://localhost:3000/public/song-data/user-1/Lil-Pump-ESSKEETIT.mp3"
+	},
+	{
+		"title": "Boss",
+		"user": "Lil Pump",
+		"userId": 1,
+		"coverArt":
+			"http://localhost:3000/public/song-data/user-1/Lil-Pump-Boss.png",
+		"audioFile":
+			"http://localhost:3000/public/song-data/user-1/Lil-Pump-Boss.mp3"
+	},
+	{
+		"title": "Distance",
+		"user": "Killy",
+		"userId": 2,
+		"coverArt":
+			"http://localhost:3000/public/song-data/user-2/KILLY-Distance.png",
+		"audioFile":
+			"http://localhost:3000/public/song-data/user-2/KILLY-Distance.mp3"
+	}
+]

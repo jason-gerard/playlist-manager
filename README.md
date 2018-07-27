@@ -24,16 +24,24 @@ Then install all dependencies
 npm install
 ```
 
-Next run the command to populate the app with some test users and songs, this will run the index.js file in the seed directory
+Next to populate the app with some test users and songs, we will run the index.js file in the seed directory
 
 ```
+cd server
 node seed
 ```
 
-Finally go into the project directory start dev env
+After that start server dev env (script which runs nodemon)
 
 ```
-npm start (script which runs nodemon)
+npm start
+```
+
+Finally we will start the front end dev env
+
+```
+cd ../client
+npm run dev
 ```
 
 ## Built With

@@ -1,5 +1,5 @@
 <template>
-    <div id="player-wrapper" class='grey' v-if='song'>
+    <div id="player-wrapper" class='grey lighten-3' v-if='song'>
 		<div class="audio-player">
 			<div class="artist-info-wrapper">
 				<img :src="song.coverArt" alt="Cover Art" class='player-cover-art'>
@@ -109,7 +109,6 @@ export default {
 	display: flex;
 }
 .player-controls {
-	color: white !important;
 	margin: 0px !important;
 }
 .progress {
@@ -118,7 +117,6 @@ export default {
 .artist-info-player {
 	min-width: 120px;
 	max-width: 120px;
-	color: white;
 	margin-top: 20px;
 }
 .artist-info-player p {
