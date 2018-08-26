@@ -3,7 +3,7 @@ module.exports = {
     db: {
         database: process.env.DB_NAME || 'playlist-manager',
         user: process.env.DB_USER || 'postgres',
-        password: process.env.DB_PASS || 'password',
+        password: process.env.DB_PASS || 'postgres',
         options: {
             dialect: process.env.DIALECT || 'postgres',
             host: process.env.HOST || 'localhost',

@@ -21,13 +21,13 @@ git clone https://github.com/jason-gerard/playlist-manager.git
 Then install all dependencies
 
 ```
+cd server
 npm install
 ```
 
 Next to populate the app with some test users and songs, we will run the index.js file in the seed directory
 
 ```
-cd server
 node seed
 ```
 
@@ -37,10 +37,11 @@ After that start server dev env (script which runs nodemon)
 npm start
 ```
 
-Finally we will start the front end dev env
+Finally we will install front end dependencies and start the front end dev env in a new terminal window
 
 ```
-cd ../client
+cd client
+npm install
 npm run dev
 ```
 
